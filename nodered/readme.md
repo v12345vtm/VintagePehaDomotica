@@ -152,7 +152,9 @@ De Node-RED flow (zie `flow.json`) bestaat uit:
 3.  **Frame Builders (Tx):** Functies die de `C0...C1` frames bouwen voor AMD, JRM en IMD.
 4.  **Serial OUT (usb):** Stuurt de frames naar de STM.
 
-*Let op:* Het simuleren van een `Aan > 2 seconden` (Functie 6) op een IMD vereist soms dat de volledige tijdlijn (`F2 -> F4 -> F6`) naar de STM wordt gestuurd, afhankelijk van de firmware van de PHC-controller.
+**Belangrijke ontdekking over IMD Functie 6:**
+Het is perfect mogelijk om direct een `Aan > 2 seconden` (Functie `0x06`) commando naar de STM te sturen, zonder eerst de kortere functies (2 en 4) te sturen. De frames zijn zelfstandig geldig. 
+*Echter*, zoals te zien is in de officiële Peha software, kan de PHC-controller (CTM) dit commando soms weigeren (rood kruisje) als de interne state-machine van de controller niet in de juiste "ingedrukt" status staat, of als er in de `VERBINDUNG` (koppelingen) geen actie is toegewezen aan deze specifieke 2-seconden gebeurtenis.
 
 ---
 
